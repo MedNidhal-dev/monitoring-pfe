@@ -1,5 +1,5 @@
 const Log = require('../models/Logs');
-const logService = require('../Services/logService');
+const logService = require('../services/logService');
 
 exports.ingestLogs = async (req, res) => {
   try {

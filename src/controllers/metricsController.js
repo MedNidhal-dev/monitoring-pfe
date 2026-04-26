@@ -1,5 +1,5 @@
 const Metric = require('../models/Metric');
-const metricService = require('../Services/metricService');
+const metricService = require('../services/metricService');
 
 exports.ingestMetrics = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const alertService = require('../Services/alertService');
+const alertService = require('../services/alertService');
 
 exports.receiveAlert = async (req, res) => {
   try {

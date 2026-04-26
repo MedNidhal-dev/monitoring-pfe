@@ -1,5 +1,5 @@
 const Incident = require('../models/Incident');
-const reportService = require('../Services/reportService');
+const reportService = require('../services/reportService');
 const { client } = require('../config/redis');
 
 exports.getAllIncidents = async (req, res) => {
