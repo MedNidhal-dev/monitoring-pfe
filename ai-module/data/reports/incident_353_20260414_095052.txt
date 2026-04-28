@@ -1,0 +1,52 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 353
+DATE: 2026-04-14 09:21:14
+SÉVÉRITÉ: MEDIUM
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+DISK_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: DISK_HIGH_USAGE
+Valeur mesurée: 100
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:21:14
+
+Analyse de cause racine:
+Log files ne sont pas réonnés de manière régulière, ce qui peut entraîner des problèmes de fiabilité.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+CAUSE: Log files not rotated (confidence: 0.9)
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Configure logrotate avec une rotation quotidienne', 'description': "Sélectionnez l'option 'rotatage quotidien' dans le fichier de configuration de logrotate."}
+2. {'name': 'Improve la gestion des artefacts dans Nexus (confidence: 0.85)', 'description': 'Implémentez une politique de conservation de 30 jours pour les artefacts dans Nexus.'}
+3. {'name': 'Scheduling un job de nettoyage temporaire', 'description': 'Créez un script qui nettoie régulièrement les tempeurs'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

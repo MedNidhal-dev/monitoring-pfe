@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 421
+DATE: 2026-04-15 05:05:23
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 05:05:23
+
+Analyse de cause racine:
+Réponse : CAUSE: DATABASE_POOL_EXHAUSTED (confidence: 0.9)
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+DATABASE_POOL_EXHAUSTED
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 'solution_1', 'name': 'Increase connection pool size from 20 to 50'}
+2. {'id': 'solution_2', 'name': 'Add connection timeout 5 seconds'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

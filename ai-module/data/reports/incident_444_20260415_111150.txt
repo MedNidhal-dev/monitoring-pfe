@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 444
+DATE: 2026-04-15 11:03:20
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+MEMORY_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: MEMORY_HIGH_USAGE
+Valeur mesurée: 88.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 11:03:20
+
+Analyse de cause racine:
+Une solution efficace pour résoudre ce problème est de réduire la taille du cache dans la configuration.
+
+Niveau de confiance: 0.95
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+Large object caching
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 'solution_1', 'description': 'Reduire la taille du cache en utilisant VisualVM pour détecter et corriger les problèmes de mémoire.', 'confidence': 0.85}
+2. {'id': 'solution_2', 'description': "Implementer l'éviction progressive des objets stockés dans le cache avec un police LRU (Least Recently Used)."}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

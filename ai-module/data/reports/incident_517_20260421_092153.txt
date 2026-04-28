@@ -1,0 +1,53 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 517
+DATE: 2026-04-21 09:08:43
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+MEMORY_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: MEMORY_HIGH_USAGE
+Valeur mesurée: 93.6
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-21 09:08:43
+
+Analyse de cause racine:
+{
+
+
+Niveau de confiance: 0.999
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+{
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {"Profile_application_visualvm": true, "Solution": "fix leak"}
+2. {"Reduce_cache_size_in_configuration": true, "Solution": "LRU eviction policy"}
+3. {"Review_object_lifecycle_management": true, "Solution": "tune JVM garbage collection parameters"}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

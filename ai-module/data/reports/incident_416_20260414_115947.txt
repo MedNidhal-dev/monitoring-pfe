@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 416
+DATE: 2026-04-14 11:58:28
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-14 11:58:28
+
+Analyse de cause racine:
+La solution consiste à profiler l'application pour identifier les sources de la mémoire, alors que le service est mis hors service immédiatement.
+
+Niveau de confiance: 0.85
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+MEMORY_LEAK
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 'restart-service-immediately', 'title': 'Réinitialiser le service après un défi de mémoire excessive'}
+2. {'id': 'profile-application-visualvm', 'title': "Profiler l'application pour identifier les sources de la mémoire"}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

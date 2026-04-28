@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 441
+DATE: 2026-04-15 10:46:50
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+MEMORY_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: MEMORY_HIGH_USAGE
+Valeur mesurée: 86.3
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 10:46:50
+
+Analyse de cause racine:
+Implement LRU eviction policy
+
+Niveau de confiance: 0.85
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+Large object caching
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 'solution_001', 'name': 'Reduce cache size in configuration', 'description': "Réduire la taille de stockage dans le fichier d'configuration"}
+2. {'id': 'solution_002', 'name': 'Implement LRU eviction policy', 'description': "Ajouter une politique de suppression de l'objet en fonction du temps passé"}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

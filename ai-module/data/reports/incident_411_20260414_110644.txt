@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 411
+DATE: 2026-04-14 10:41:18
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 199.8
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-14 10:41:18
+
+Analyse de cause racine:
+Lorsque la base de données est en train de s'empêcher d'exécuter des requêtes en raison du stockage limité, il peut y avoir une anomalies.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+CAUSE:DATABASE_POOL_EXHAUSTED (confidence: 0.9)
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 1, 'title': 'Increase connection pool size from 20 to 50', 'description': "Augmentez la taille du gestionnaire de connexions jusqu'à 50 pour fournir plus de ressources aux requêtes."}
+2. {'id': 2, 'title': 'Add connection timeout 5 seconds', 'description': 'Ajoutez une durée de temps de connexion de 5 secondes supplémentaires à chaque requête pour gérer la charge maximale des connexions.'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 431
+DATE: 2026-04-15 07:22:13
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 07:22:13
+
+Analyse de cause racine:
+Lorsque le nombre de connexions disponibles est trop bas, le serveur peut rechercher un serveur dans une liste vide, ce qui conduit à des erreurs de gestion de base.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+INCREASE_CONNECTION_POOL_SIZE
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'réduire le nombre de connexion', 'description': 'Réévaluons notre stratégie pour gérer les connexions et ajuster la police des connexions si nécessaire.'}
+2. {'name': 'ajouter une limite temporaire aux connexions', 'description': 'Ajustons la police des connexions pour maximiser le nombre de connexions disponibles sans augmenter trop le temps de déconnexion.'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,53 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 494
+DATE: 2026-04-21 05:16:59
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+MEMORY_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: MEMORY_HIGH_USAGE
+Valeur mesurée: 88.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-21 05:16:59
+
+Analyse de cause racine:
+{\n  "LARGE_OBJECT_CACHEING"
+}
+
+Niveau de confiance: 0.85
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+{\n  "PROFILE_APPLICATION_WITH_VISUALVM_AND_FIX_LEAK"}\n
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'cause': '{\\n  "LARGE_OBJECT_CACHEING"\n}', 'solution': '{\\n  "REDUCE_CACHE_SIZE_IN_CONFIGURATION\\n}', 'confidence': 0.85}
+2. {'cause': '{\\n  "TOO_MANY_OBJECTS_IN_HEAP\\n}', 'solution': '{\\n  "REVIEW_OBJECT_LIFECYCLET Management\\n}', 'confidence': 0.85}
+3. {'cause': '{\\n  "PROFILE_APPLICATION_WITH_VISUALVM_AND_FIX_LEAK\\n}', 'solution': '{\\n  "RESTART_SERVICE_IMMEDIATELY\\n}', 'confidence': 0.9}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,49 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 382
+DATE: 2026-04-14 09:19:51
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 186.0
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:19:51
+
+Analyse de cause racine:
+Cette solution est la base de la première cause et a été sélectionnée par son niveau de confiance élevé. Un grand nombre d'applications connectées à la même base de données peut entraîner une charge excessive sur le pool de connexion, entraînant ainsi un high usage CPU. Un increase du size du pool permettra de répartir l'usage des connexions plus uniformément.
+
+Niveau de confiance: 0.5
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+INCREASE_CONNECTION_POOL_SIZE
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

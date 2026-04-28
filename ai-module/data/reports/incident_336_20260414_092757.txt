@@ -1,0 +1,52 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 336
+DATE: 2026-04-14 09:22:04
+SÉVÉRITÉ: MEDIUM
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+DISK_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: DISK_HIGH_USAGE
+Valeur mesurée: 100
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:22:04
+
+Analyse de cause racine:
+Ce problème peut être résolu en configurant logrotate pour réorganiser les fichiers d'origine chaque jour.
+
+Niveau de confiance: 0.8
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+CAUSE: Log files not rotated (confidence: 0.9)
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Configure logrotate avec rotation quotidienne', 'definition': "Logrotate est un script qui régule l'accès aux fichiers au niveau de la logique de stockage. Pour résoudre le problème des fichiers d'origine, il faut configurer logrotate pour réorganiser les fichiers chaque jour.", 'confidence': 0.9}
+2. {'name': 'Implementer un système de retention policie dans Nexus', 'definition': "Nexus est une plateforme de gestion des artifacts qui permet de stocker et de gérer l'accès aux fichiers. Pour résoudre le problème des fichiers anciens, il faut ajouter un système de retention policie pour supprimer les artefacts plus anciens.", 'confidence': 0.85}
+3. {'name': 'Scheduling du cron job', 'definition': 'Un cron job est un script qui est exécuté à intervalles réguliers. Pour résoudre le problème des fichiers temporaires, il faut installer un scheduling pour exécuter un cron job chaque jour pour supprimer les fichiers anciens.', 'confidence': 0.85}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

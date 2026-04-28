@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 499
+DATE: 2026-04-21 06:07:19
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+MEMORY_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: MEMORY_HIGH_USAGE
+Valeur mesurée: 85.2
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-21 06:07:19
+
+Analyse de cause racine:
+Le système cache les objets importants pour faciliter la gestion du temps de chargement des données, ce qui peut entraîner l'éviction d'autres objets dans le mémoire haute. Pour résoudre cette anomalie, il est recommandé de réduire la taille du cache ou d'implémenter une politique LRU (Least Recently Used) pour éviter l'éviction de données importantes.
+
+Niveau de confiance: 0.85
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+Large object caching
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'id': 'solution_1', 'name': 'Reduzier la taille du cache', 'description': "Il est recommandé d'ajouter des paramètres de configuration pour réduire la taille du cache, telles que les paramètres `cache.size` et `cache.maxSize`. Cela peut être effectué dans le fichier de configuration de la base de données."}
+2. {'id': 'solution_2', 'name': 'Implementer une politique LRU', 'description': "Une politique LRU permet d'éviter l'éviction de données importantes en stockant les objets les plus récemment utilisés au détriment des objets moins souvent utilisés."}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 438
+DATE: 2026-04-15 10:22:30
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 10:22:30
+
+Analyse de cause racine:
+Lorsque le serveur est soumis à des exécutions de plus de 50 requêtes simultanées, il peut se resserrer sur la gestion du pool de connexion, entraînant une diminution de l'accès aux données.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+DATABASE_POOL_EXHAUSTED
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Increase connection pool size from 20 to 50', 'description': "Augmenter le nombre de connexions pouvant être utilisées simultanément dans le gestionnaire de connexion pour s'assurer que suffisamment de connexions sont disponibles."}
+2. {'name': 'Add connection timeout 5 seconds', 'description': "Ajouter un temps d'attente supplémentaire entre deux requêtes concurrentes pour minimiser les conflits entre connexions existantes et nouvelles"}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

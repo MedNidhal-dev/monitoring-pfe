@@ -1,0 +1,52 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 365
+DATE: 2026-04-14 09:20:41
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 191.4
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:20:41
+
+Analyse de cause racine:
+Cette anomalie est liée à un problème de pool de connexion excesif, qui peut être résolu en augmentant le nombre de connexions pouvant s'effectuer simultanément.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+CAUSE: DATABASE_POOL_EXHAUSTED
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'solution_type': 'Increase connection pool size from 20 to 50', 'solution': 'Augmenter la taille du pool de connexion du serveur.'}
+2. {'solution_type': 'Add connection timeout 5 seconds', 'solution': "Ajouter un temps d'attente pour les connexions"}
+3. {'solution_type': 'Review code for connection leaks', 'solution': 'Reviser le code pour détecter et corriger toute connexion en excès.'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

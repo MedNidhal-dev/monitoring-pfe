@@ -1,0 +1,52 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 524
+DATE: 2026-04-21 10:08:43
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-21 10:08:43
+
+Analyse de cause racine:
+La base de données est en surcharge, ce qui peut entraîner une demande excessive à l'ordinateur. La solution consiste à augmenter le nombre de connexions pouvant être enregistrées dans la pool.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+DATABASE_POOL_EXHAUSTED
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Increase connection pool size from 20 to 50', 'description': "Augmenter le nombre de connexions pouvant être enregistrées dans la pool pour réduire l'augmentation des requêtes."}
+2. {'name': 'Add connection timeout 5 seconds', 'description': "Ajouter un délai de connexion de 5 secondes à chaque requête pour limiter les besoins d'accès aux données"}
+3. {'name': 'Review code for connection leaks', 'description': "Examiné et résolu tout problème potentiel de connexion à l'extérieur des scripts."}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

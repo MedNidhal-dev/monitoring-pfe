@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 377
+DATE: 2026-04-14 09:20:04
+SÉVÉRITÉ: MEDIUM
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+DISK_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: DISK_HIGH_USAGE
+Valeur mesurée: 100
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:20:04
+
+Analyse de cause racine:
+La base de données est en train de grandir sans être sauvegardée, ce qui peut entraîner des problèmes de conformité et d'efficacité.
+
+Niveau de confiance: 0.8
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+CAUSE: Database growth without archiving
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Implement 30-day retention policy in Nexus', 'description': 'Mettre en place un politique de retention de 30 jours pour sauvegarder les données anciennes.'}
+2. {'name': 'Schedule daily cleanup cron job', 'description': 'Créer un script crontab pour régulièrement éliminer les fichiers temporaires et les méta-données accumulés dans la base de données.'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

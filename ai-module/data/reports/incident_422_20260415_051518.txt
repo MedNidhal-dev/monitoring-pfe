@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 422
+DATE: 2026-04-15 05:12:26
+SÉVÉRITÉ: MEDIUM
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+DISK_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: DISK_HIGH_USAGE
+Valeur mesurée: 100
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 05:12:26
+
+Analyse de cause racine:
+Cette anomalie est probablement liée au fait que les logs sont non rétournés, ce qui peut conduire à une accumulation de fichiers temporaux.
+
+Niveau de confiance: 0.85
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+Temp files accumulation
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'Schedule daily cleanup cron job', 'description': 'Configurer un script crontab pour déplacer les fichiers temporaires vers un répertoire dédié'}
+2. {'name': 'Implement 30-day retention policy in Nexus', 'description': 'Définir une politique de stockage de négociation pour éliminer les données anciennes après 30 jours'}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 428
+DATE: 2026-04-15 06:27:23
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 06:27:23
+
+Analyse de cause racine:
+Il est possible que le problème soit lié à une pile excessive de connexions, ce qui peut être causé par divers facteurs tels que l'utilisation excessive des ressources réseau ou la concurrence dans le pool de connexions. Une solution efficace serait d'augmenter la taille du pool de connexion (50) et d'ajouter un timeout élevé (5 secondes).
+
+Niveau de confiance: 1.0
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+DATABASE_POOL_EXHAUSTED
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'cause': 'DATABASE_POOL_EXHAUSTED', 'solutions': ['Increase connection pool size from 20 to 50']}
+2. {'cause': 'DATABASE_POOL_EXHAUSTED', 'solutions': ['Add connection timeout 5 seconds']}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

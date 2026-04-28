@@ -1,0 +1,50 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 367
+DATE: 2026-04-14 09:20:34
+SÉVÉRITÉ: MEDIUM
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+DISK_HIGH_USAGE sur %{[agent][hostname]}
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: DISK_HIGH_USAGE
+Valeur mesurée: 100
+Serveur affecté: %{[agent][hostname]}
+Heure de détection: 2026-04-14 09:20:34
+
+Analyse de cause racine:
+
+
+Niveau de confiance: 0.95
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+{ CAUSE: Log files not rotated (confidence: 0.9) SOLUTIONS: Configure logrotate with daily rotation }
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. { CAUSE: Old artifacts not cleaned (confidence: 0.85) SOLUTIONS: Implement 30-day retention policy in Nexus }
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────

@@ -1,0 +1,51 @@
+
+======================================================================
+RAPPORT D'INCIDENT
+======================================================================
+
+ID INCIDENT: 446
+DATE: 2026-04-15 11:27:40
+SÉVÉRITÉ: HIGH
+
+──────────────────────────────────────────────────────────────────────
+TITRE
+──────────────────────────────────────────────────────────────────────
+CPU_HIGH_USAGE sur srv-monitoring.lab
+
+──────────────────────────────────────────────────────────────────────
+DESCRIPTION
+──────────────────────────────────────────────────────────────────────
+Anomalie détectée: CPU_HIGH_USAGE
+Valeur mesurée: 100.0
+Serveur affecté: srv-monitoring.lab
+Heure de détection: 2026-04-15 11:27:40
+
+Analyse de cause racine:
+Une solution efficace pour cette anomalie est d'ajouter un nouveau paramètre au serveur, qui permettrait de réduire les débogages nécessaires en cas de problèmes de gestion du pool de connexion.
+
+Niveau de confiance: 0.9
+
+
+──────────────────────────────────────────────────────────────────────
+CAUSE RACINE
+──────────────────────────────────────────────────────────────────────
+INCREASE_CONNECTION_POOL_SIZE
+
+──────────────────────────────────────────────────────────────────────
+SOLUTIONS RECOMMANDÉES
+──────────────────────────────────────────────────────────────────────
+1. {'name': 'REVIEW_CODE', 'description': "Reviser l'appareil pour détecter et corriger tout problème potentiel d'ouverture excessive des connexions à la base de données."}
+2. {'name': 'RESTART_SERVICE_IMMÉDIAREMMENT', 'description': "Pour résoudre le cas de serveur, il est possible de restaurer l'appareil instantanément en utilisant un commande de redémarre."}
+
+──────────────────────────────────────────────────────────────────────
+ACTIONS REQUISES
+──────────────────────────────────────────────────────────────────────
+[ ] Vérifier les métriques système
+[ ] Appliquer les solutions recommandées
+[ ] Tester et valider
+[ ] Marquer comme résolu
+
+──────────────────────────────────────────────────────────────────────
+Rapport généré automatiquement - Système monitoring VERMEG
+Développé par: Nidhal - PFE 2026
+──────────────────────────────────────────────────────────────────────
