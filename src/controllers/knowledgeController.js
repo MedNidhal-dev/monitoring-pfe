@@ -54,7 +54,7 @@ exports.addKnowledge = async (req, res) => {
     
   } catch (err) {
     console.error('addKnowledge error:', err.message);
-    res.json({ success: false, message: 'Insert failed' });
+    res.json({ success: false, message: 'Insert faileeed' });
   }
 };
 
