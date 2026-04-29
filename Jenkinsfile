@@ -28,7 +28,7 @@ pipeline {
         stage('Push to Nexus') {
             steps {
                 script {
-                    echo " Envoi des images vers le registre Nexus..."
+                    echo " Envoi des images vers le Nexus"
                     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
                         sh "echo ${NEXUS_PASSWORD} | docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} --password-stdin"
                         sh "docker push ${NEXUS_REGISTRY}/${IMAGE_BACKEND}:latest"
@@ -42,8 +42,7 @@ pipeline {
         stage('Deploy with Ansible') {
             steps {
                 script {
-                    echo " Déploiement automatique via Ansible..."
-                    // On lance le playbook Ansible qui se trouve dans le dossier ansible de ton repo
+                    echo " Déploiement automatique via Ansible"
                     sh "ansible-playbook -i ansible/inventory/hosts ansible/playbooks/deploy.yml"
                 }
             }
