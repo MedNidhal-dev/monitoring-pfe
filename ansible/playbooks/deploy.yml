@@ -1,0 +1,18 @@
+---
+- name: Déploiement automatique du système de monitoring
+  hosts: monitoring_servers
+  vars:
+    project_path: "/opt/monitoring"
+    nexus_registry: "192.168.75.1:8082"
+
+  tasks:
+    - name: Pull des dernières images depuis Nexus
+      shell: "docker pull {{ item }}"
+      loop:
+        - "{{ nexus_registry }}/monitoring-backend:latest"
+        - "{{ nexus_registry }}/monitoring-ai:latest"
+
+    - name: Relancer les services avec Docker Compose
+      shell: "docker-compose up -d"
+      args:
+        chdir: "{{ project_path }}"
