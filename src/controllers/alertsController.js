@@ -2,7 +2,7 @@ const alertService = require('../services/alertService');
 
 exports.receiveAlert = async (req, res) => {
   try {
-    console.log('[ALERT] Received new alert from AI');
+    console.log('[AAA9EEF] Received new alert from AI');
 
     const incident = await alertService.processAlert(req.body);
 
