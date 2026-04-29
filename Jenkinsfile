@@ -33,7 +33,7 @@ pipeline {
                         sh "echo ${NEXUS_PASSWORD} | docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} --password-stdin"
                         sh "docker push ${NEXUS_REGISTRY}/${IMAGE_BACKEND}:latest"
                         sh "docker push ${NEXUS_REGISTRY}/${IMAGE_AI}:latest"
-                        sh "docker logout ${NEXUS_REGISTRY}"
+                        
                     }
                 }
             }
