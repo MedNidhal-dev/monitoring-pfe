@@ -131,7 +131,7 @@ const DashboardPage = () => {
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3, borderRadius: '16px' }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>Tendance hebdomadaire</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>Tendance Par Semaine</Typography>
               <Chip label="7 derniers jours" size="small" />
             </Stack>
             <Box sx={{ width: '100%', height: 300 }}>
