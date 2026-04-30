@@ -33,7 +33,7 @@ const authLimiter = rateLimit({
 });
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://192.168.75.129:5173', 'http://localhost:3000'],
+  origin: ['http://localhost:5173', 'http://192.168.75.129', 'http://192.168.75.129:5173', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));

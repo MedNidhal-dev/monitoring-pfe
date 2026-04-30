@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 
 const useWebSocket = (url) => {
-  const wsUrl = url || (import.meta.env.VITE_WS_URL || 'ws://localhost:3000');
+  const wsUrl = url || 'ws://192.168.75.129:3001';
   const [lastMessage, setLastMessage] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const ws = useRef(null);
