@@ -11,21 +11,21 @@ const ObservabilityPage = () => {
     const allDashboards = [
     { 
       title: 'Infrastructure & Santé Système', 
-      url: "http://192.168.75.129:3002/d/dfir1mtd9c4qob/system-health-e28094-solife?orgId=1&refresh=30s&kiosk",
+      url: "http://192.168.75.129:3000/d/dfir1mtd9c4qob/system-health-e28094-solife?orgId=1&refresh=30s&kiosk",
       icon: <Activity size={20} />,
       desc: 'Métriques CPU, RAM, Disk.',
       roles: ['devops', 'manager'] 
     },
     { 
       title: 'Analyse des Logs', 
-      url: "http://192.168.75.129:3002/d/cfiqyup6m4hkwa/logs-and-incidents-e28094-solife?orgId=1&refresh=10s&kiosk",
+      url: "http://192.168.75.129:3000/d/cfiqyup6m4hkwa/logs-and-incidents-e28094-solife?orgId=1&refresh=10s&kiosk",
       icon: <Layout size={20} />,
       desc: 'Logs serveurs et corrélation.',
       roles: ['devops', 'developer']
     },
     { 
       title: 'Monitoring CI/CD (Jenkins)', 
-      url: "http://192.168.75.129:3002/d/efiqw65lbqccgd/ci-cd-monitoring-e28094-jenkins?orgId=1&kiosk",
+      url: "http://192.168.75.129:3000/d/efiqw65lbqccgd/ci-cd-monitoring-e28094-jenkins?orgId=1&kiosk",
       icon: <Cpu size={20} />,
       desc: 'Pipelines et déploiements.',
       roles: ['devops', 'developer', 'manager']
