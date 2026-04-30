@@ -14,6 +14,10 @@ COPY . .
 # Lancer le build proprement
 RUN npm run build
 
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+COPY package*.json ./
+
 # Étape 2 : Production
 FROM nginx:stable-alpine
 COPY --from=build-stage /app/dist /usr/share/nginx/html

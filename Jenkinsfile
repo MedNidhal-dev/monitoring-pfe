@@ -5,7 +5,7 @@ pipeline {
         NEXUS_REGISTRY = "192.168.75.1:8082"
         IMAGE_BACKEND = "monitoring-backend"
         IMAGE_AI = "monitoring-ai"
-        IMAGE_FRONTEND = "monitoring-frontend" // Nouveau
+        IMAGE_FRONTEND = "monitoring-frontend" 
     }
     
     stages {
@@ -21,7 +21,8 @@ pipeline {
                     echo "🏗️ Build AI Module..."
                     sh "docker build -t ${NEXUS_REGISTRY}/${IMAGE_AI}:latest ./ai-module"
                     echo "🏗️ Build Frontend..."
-                    sh "docker build -t ${NEXUS_REGISTRY}/${IMAGE_FRONTEND}:latest ./client" // Nouveau
+                    sh "docker build --build-arg VITE_API_URL=http://192.168.75.129:3001/api -t ${NEXUS_REGISTRY}/${IMAGE_FRONTEND}:latest ./client"
+
                 }
             }
         }
