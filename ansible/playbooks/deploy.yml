@@ -11,6 +11,7 @@
       loop:
         - "{{ nexus_registry }}/monitoring-backend:latest"
         - "{{ nexus_registry }}/monitoring-ai:latest"
+        - "{{ nexus_registry }}/monitoring-frontend:latest" 
 
     - name: Relancer les services avec Docker Compose
       shell: "docker-compose up -d"
