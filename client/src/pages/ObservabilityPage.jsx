@@ -71,7 +71,7 @@ const ObservabilityPage = () => {
             variant="outlined" 
             size="medium"
             startIcon={<ExternalLink size={18} />}
-            onClick={() => window.open(currentDashboard.url, '_blank')}
+            onClick={() => window.open(currentDashboard.url.replace('&kiosk', ''), '_blank')}
             sx={{ borderRadius: '12px' }}
           >
             Plein écran
