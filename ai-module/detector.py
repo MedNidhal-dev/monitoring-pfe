@@ -22,7 +22,7 @@ def get_database_connection():
     except Exception as e:
         print(f"Erreur de connexion à la base de données: {e}")
         return None
-def check_error_logs(minutes_ago=70):
+def check_error_logs(minutes_ago=6):
  
     # Connexion à la base de données
     conn = get_database_connection()
@@ -74,7 +74,7 @@ def check_error_logs(minutes_ago=70):
     
     return error_list
 
-def check_system_metrics(minutes_ago=70):
+def check_system_metrics(minutes_ago=6):
     conn = get_database_connection()
     if not conn:
         return []
@@ -207,8 +207,7 @@ def check_system_metrics(minutes_ago=70):
     return metric_anomalies
 
 
-def run_detection():
-
+def run_detection(minutes_ago=6):
     print("*" * 70)
     print("DÉMARRAGE DE LA DÉTECTION D'ANOMALIES")
     print("*" * 70)
@@ -216,10 +215,10 @@ def run_detection():
     print("-" * 70)
     
     # Détecter les erreurs dans les logs
-    log_errors = check_error_logs(minutes_ago=70)
+    log_errors = check_error_logs(minutes_ago=minutes_ago)
     
     # Détecter les anomalies dans les métriques
-    metric_issues = check_system_metrics(minutes_ago=70)
+    metric_issues = check_system_metrics(minutes_ago=minutes_ago)
     
     # Préparer le résultat final
     all_anomalies = {
