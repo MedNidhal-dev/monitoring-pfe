@@ -43,6 +43,17 @@ exports.resolveIncident = async (req, res) => {
     if (!result) {
       return res.json({ success: false, message: 'Update failed' });
     }
+
+    // Trigger AI learning process (background)
+    try {
+      const axios = require('axios');
+      // AI module API port is 5001
+      axios.post(`http://localhost:5001/api/learn/${id}`)
+        .then(response => console.log('AI learning triggered:', response.data.message))
+        .catch(err => console.error('AI learning trigger failed:', err.message));
+    } catch (err) {
+      console.error('Axios not found or other error:', err.message);
+    }
     
     res.json({ 
       success: true, 

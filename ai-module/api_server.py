@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
 from chat_bot import process_question
+from kg_manager import learn_from_resolved_incident
 import logging
 
 # Setup
@@ -55,6 +56,29 @@ def chat():
             'success': False,
             'error': str(e),
             'fallback': 'Chatbot temporarily unavailable. Check Grafana dashboards for details.'
+        }), 500
+
+@app.route('/api/learn/<int:incident_id>', methods=['POST'])
+def learn(incident_id):
+    """
+    Endpoint to trigger auto-learning from a resolved incident
+    Called by Node.js backend when an incident is marked as RESOLVED
+    """
+    try:
+        logger.info(f"[API] Learning request for incident #{incident_id}")
+        count = learn_from_resolved_incident(incident_id)
+        
+        return jsonify({
+            'success': True,
+            'incident_id': incident_id,
+            'triplets_added': count,
+            'message': f'AI successfully learned {count} new facts from this incident.'
+        })
+    except Exception as e:
+        logger.error(f"[API ERROR] Learning failed: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
         }), 500
 
 if __name__ == '__main__':

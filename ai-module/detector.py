@@ -32,7 +32,7 @@ def check_error_logs(minutes_ago=70):
     cursor = conn.cursor()
     start_time = datetime.now() - timedelta(minutes=minutes_ago)
     
-    # Requête SQL pour trouver les logs WARN
+    # Requête SQL pour trouver les erreurs et avertissements
     sql_query = """
         SELECT 
             id,
@@ -41,7 +41,7 @@ def check_error_logs(minutes_ago=70):
             log_level,
             message
         FROM logs
-        WHERE log_level IN ('WARN', 'INFO')
+        WHERE log_level IN ('WARN', 'INFO', 'ERROR', 'CRITICAL', 'FATAL')
 
           AND timestamp > %s
         ORDER BY timestamp DESC

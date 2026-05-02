@@ -16,8 +16,9 @@ DB_CONFIG = {
 }
 
 
-# Dossier pour sauvegarder les rapports
-REPORTS_FOLDER = "/home/nidhal/ai_module/data/reports"
+# Dossier pour sauvegarder les rapports (chemin relatif au script)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REPORTS_FOLDER = os.path.join(BASE_DIR, "data", "reports")
 os.makedirs(REPORTS_FOLDER, exist_ok=True)
 
 
@@ -268,27 +269,8 @@ def get_report(report_id):
     return None
 
 
-def mark_resolved(report_id):
-    """
-    Marque un incident comme résolu
-    """
-    conn = psycopg2.connect(**DB_CONFIG)
-    cursor = conn.cursor()
-    
-    query = """
-        UPDATE incident_reports
-        SET status = 'RESOLVED',
-            resolved_at = NOW()
-        WHERE id = %s
-    """
-    
-    cursor.execute(query, (report_id,))
-    conn.commit()
-    
-    cursor.close()
-    conn.close()
-    
-    print(f"Incident #{report_id} marqué résolu")
+    return None
+
 
 def notify_backend(incident_data):
     backend_url = os.getenv('BACKEND_URL', 'http://192.168.75.1:3000')
