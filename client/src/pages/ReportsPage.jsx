@@ -325,16 +325,20 @@ const ReportsPage = () => {
                   <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>Solutions Recommandées</Typography>
                   <Stack spacing={1}>
                     {parseJSON(selectedReport.solutions).length > 0 ? (
-                      parseJSON(selectedReport.solutions).map((sol, i) => (
-                        <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
-                          <Typography variant="body2">
-                            <strong>{sol.title || sol.action || `Solution ${i+1}`}</strong>
-                          </Typography>
-                          {sol.description && (
-                            <Typography variant="caption" color="text.secondary">{sol.description}</Typography>
-                          )}
-                        </Paper>
-                      ))
+                      parseJSON(selectedReport.solutions).map((sol, i) => {
+                        const solutionText = typeof sol === 'string' ? sol : (sol.title || sol.action || `Solution ${i+1}`);
+                        const solutionDesc = typeof sol === 'object' ? sol.description : null;
+                        return (
+                          <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
+                            <Typography variant="body2">
+                              <strong>{solutionText}</strong>
+                            </Typography>
+                            {solutionDesc && (
+                              <Typography variant="caption" color="text.secondary">{solutionDesc}</Typography>
+                            )}
+                          </Paper>
+                        );
+                      })
                     ) : (
                       <Typography variant="body2" color="text.secondary">Aucune solution disponible</Typography>
                     )}
