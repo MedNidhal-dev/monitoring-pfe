@@ -11,18 +11,28 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Database config (same as your reporter.py)
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Database config from environment
 DB_CONFIG = {
-    'host': 'localhost',
-    'database': 'monitoring',
-    'user': 'logstash_user',
-    'password': 'Nidhal123',
-    'port': 5432
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'database': os.getenv('DB_NAME', 'monitoring'),
+    'user': os.getenv('DB_USER', 'postgres'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'port': int(os.getenv('DB_PORT', 5432))
 }
 
 def get_db_connection():
     """Connect to PostgreSQL"""
-    return psycopg2.connect(**DB_CONFIG)
+    try:
+        return psycopg2.connect(**DB_CONFIG)
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+        raise e
 
 
 # ═══════════════════════════════════════════════════════════
@@ -311,11 +321,13 @@ def process_question(question, user_role="manager"):
         elif intent == 'ai_effectiveness':
             data = handle_ai_effectiveness()
         
+        elif intent == 'greeting':
+            data = {'message': 'Salutation amicale'}
+            
         elif intent == 'general_stats':
             data = {
                 'mttr': handle_get_mttr('7d'),
-                'services': handle_most_problematic_service('30d'),
-                'ai': handle_ai_effectiveness()
+                'services': handle_most_problematic_service('30d')
             }
         
         else:
@@ -339,30 +351,28 @@ def process_question(question, user_role="manager"):
 def generate_answer_with_llm(question, intent, data):
     """Use Llama to generate natural language business response"""
     
-    # Build contextual prompt
-    prompt = f"""Tu es un assistant intelligent pour des managers non-techniques dans un outil de monitoring DevOps.
+    # Simple prompt for 1b model
+    prompt = f"""[CONTEXTE]
+Tu es l'assistant IA de SOLIFE Monitoring.
+Intention: {intent}
+Données: {json.dumps(data, ensure_ascii=False)}
 
-Question du manager: {question}
+[QUESTION]
+{question}
 
-Type de demande: {intent}
-
-Données du système:
-{json.dumps(data, indent=2, ensure_ascii=False)}
-
-INSTRUCTIONS IMPORTANTES:
-1. Réponds UNIQUEMENT en Français
-2. Utilise un style business (pas technique)
-3. Maximum 4-5 phrases courtes
-4. Inclus des chiffres concrets quand possible
-5. Sois rassurant mais honnête
-6. Si problème identifié: propose une action concrète
-7. Évite le jargon technique (pas de "threads", "pool", "buffer", etc.)
-8. Réponds directement sans préambule ni conclusion
+[RÈGLES]
+- Réponds en Français
+- Style business et professionnel
+- Max 3 phrases
+- Si c'est un bonjour, salue poliment.
+- Si ID non trouvé, propose de vérifier le numéro.
 
 RÉPONSE:"""
     
     try:
-        response = ollama.chat(
+        # Check if Ollama host is configured
+        ollama_client = ollama.Client(host=os.getenv('OLLAMA_HOST', 'http://localhost:11434'))
+        response = ollama_client.chat(
             model='llama3.2:1b',
             messages=[{'role': 'user', 'content': prompt}]
         )
@@ -378,7 +388,10 @@ RÉPONSE:"""
 
 def generate_fallback_answer(intent, data):
     """Fallback template answer if Llama is unavailable"""
-    if intent == 'get_mttr':
+    if intent == 'greeting':
+        return "Bonjour ! Je suis votre assistant IA. Comment puis-je vous aider aujourd'hui ?"
+        
+    elif intent == 'get_mttr':
         return f"Le MTTR actuel est de {data.get('mttr_minutes', 'N/A')} minutes basé sur {data.get('incidents_resolved', 0)} incidents résolus."
     
     elif intent == 'ai_effectiveness':

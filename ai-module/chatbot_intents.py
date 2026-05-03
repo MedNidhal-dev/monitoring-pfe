@@ -15,14 +15,22 @@ def detect_intent(question):
     """
     question_lower = question.lower()
     
+    # INTENT 0: Greetings
+    if any(word in question_lower for word in ['hello', 'hi', 'bonjour', 'salut', 'hey', 'yo', 'assistant']):
+        return {
+            'intent': 'greeting',
+            'params': {}
+        }
+
     # INTENT 1: Question about specific incident
-    if 'incident' in question_lower and '#' in question:
-        match = re.search(r'#(\d+)', question)
+    if 'incident' in question_lower or '#' in question:
+        # Match #123 or just 123 after 'incident'
+        match = re.search(r'(?:#|incident\s*)(\d+)', question_lower)
         if match:
             incident_id = match.group(1)
             
             # Sub-intent: why slow resolution?
-            if any(word in question_lower for word in ['long', 'lent', 'pourquoi', 'temps', 'durée', 'heure']):
+            if any(word in question_lower for word in ['long', 'lent', 'pourquoi', 'temps', 'durée', 'heure', 'pourquoi si long']):
                 return {
                     'intent': 'explain_incident_duration',
                     'params': {'incident_id': incident_id}
@@ -36,7 +44,7 @@ def detect_intent(question):
                 }
     
     # INTENT 2: MTTR questions
-    if 'mttr' in question_lower:
+    if 'mttr' in question_lower or 'temps de résolution' in question_lower:
         if any(word in question_lower for word in ['augment', 'hausse', 'pourquoi', 'évolué', 'change']):
             return {
                 'intent': 'explain_mttr_change',
