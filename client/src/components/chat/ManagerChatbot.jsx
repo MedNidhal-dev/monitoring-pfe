@@ -18,6 +18,9 @@ import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 
+// API base URL - backend runs on port 3001
+const API_URL = 'http://192.168.75.129:3001';
+
 function ManagerChatbot() {
     const [open, setOpen] = useState(false);
     const [messages, setMessages] = useState([

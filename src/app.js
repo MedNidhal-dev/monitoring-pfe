@@ -65,7 +65,7 @@ app.get('/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     service: 'SOLIFE Monitoring Backend',
-    routes: ['/api/logs', '/api/metrics', '/api/incidents', '/api/alerts', '/api/auth']
+    routes: ['/api/logs', '/api/metrics', '/api/incidents', '/api/alerts', '/api/auth', '/api/chat', '/api/knowledge']
   });
 });
 
