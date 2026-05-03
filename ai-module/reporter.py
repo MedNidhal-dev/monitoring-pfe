@@ -66,7 +66,7 @@ Niveau de confiance: {confidence}
     conn = psycopg2.connect(**DB_CONFIG)
     cursor = conn.cursor()
 
-    existing_id = find_recent_open_incident(anomaly_type, host_name, minutes=20)
+    existing_id = find_recent_open_incident(anomaly_type, host_name, minutes=60)
     if existing_id:
         print(f"Incident déjà ouvert récemment: #{existing_id} (skip création)")
         return existing_id
@@ -81,13 +81,14 @@ Niveau de confiance: {confidence}
             service_name,
             anomaly_type,
             root_cause,
+            explanation,
             solutions,
             confidence,
             created_at
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id
     """
-    
+
     cursor.execute(insert_query, (
         report_title,
         description,
@@ -96,6 +97,7 @@ Niveau de confiance: {confidence}
         service_name,
         anomaly_type,
         root_cause,
+        explanation,
         json.dumps(solutions),
         confidence,
         incident_time
@@ -273,7 +275,7 @@ def get_report(report_id):
 
 
 def notify_backend(incident_data):
-    backend_url = os.getenv('BACKEND_URL', 'http://192.168.75.1:3000')
+    backend_url = os.getenv('BACKEND_URL', 'http://192.168.75.129:3001')
     try:
         response = requests.post(
             f"{backend_url}/api/alerts",

@@ -29,16 +29,31 @@ def process_log_error(log_error):
     
     # Extraction d'entités
     entities = ner.extract_entities(log_msg, use_llm=True)
-    
+
     service = entities.get('service_name', 'UNKNOWN')
     error_type = entities.get('error_type', 'UNKNOWN')
-    
+
     print(f"Service: {service}")
     print(f"Type: {error_type}")
-    
+
+    # Mapper le type d'erreur NER vers un type d'anomalie connu du KG
+    error_to_anomaly = {
+        'timeout': 'DATABASE_TIMEOUT',
+        'connection refused': 'SERVICE_DOWN',
+        'connection failed': 'SERVICE_DOWN',
+        'out of memory': 'OUT_OF_MEMORY',
+        'crash': 'SERVICE_DOWN',
+        'not found': 'SERVICE_SLOW',
+        'unauthorized': 'SERVICE_SLOW',
+        'database error': 'DATABASE_TIMEOUT',
+    }
+
+    anomaly_type = error_to_anomaly.get(error_type.lower(), 'ERROR_RATE_HIGH')
+    print(f"Anomaly type mapped: {anomaly_type}")
+
     # Analyse RCA
     anomaly_info = {
-        'type': 'ERROR_RATE_HIGH',
+        'type': anomaly_type,
         'value': log_level,
         'host': server,
         'timestamp': timestamp,

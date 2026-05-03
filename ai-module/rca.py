@@ -5,6 +5,97 @@ import detector
 import re
 
 
+def get_best_cause_with_solutions(causes, anomaly_type):
+    """
+    Pick the best cause from the list. Prefers causes that have solutions.
+    For CPU anomalies, prefers memory/loop causes over database pool.
+    """
+    if not causes:
+        return None, []
+
+    best = None
+    best_solutions = []
+
+    for cause_info in causes:
+        cause_name = cause_info['cause']
+        sols = kg_manager.find_solutions(cause_name)
+
+        # Relevance scoring
+        score = cause_info.get('confidence', 0.5)
+
+        # Boost causes that actually have solutions
+        if sols:
+            score += 0.1
+
+        # Boost relevance for CPU anomalies
+        if anomaly_type == 'CPU_HIGH_USAGE':
+            if 'MEMORY' in cause_name.upper() or 'LOOP' in cause_name.upper() or 'CONCURRENT' in cause_name.upper():
+                score += 0.05
+            elif 'DATABASE_POOL' in cause_name.upper():
+                score -= 0.1  # Less likely direct cause of CPU 100%
+
+        # Boost relevance for MEMORY anomalies
+        if anomaly_type == 'MEMORY_HIGH_USAGE':
+            if 'MEMORY' in cause_name.upper() or 'CACHE' in cause_name.upper() or 'LEAK' in cause_name.upper():
+                score += 0.05
+
+        # Boost relevance for DISK anomalies
+        if anomaly_type == 'DISK_HIGH_USAGE':
+            if 'LOG' in cause_name.upper() or 'TEMP' in cause_name.upper() or 'ARTIFACT' in cause_name.upper():
+                score += 0.05
+
+        if not best or score > best_score:
+            best = cause_info
+            best_score = score
+            best_solutions = sols
+
+    return best, best_solutions
+
+
+def build_fallback_response(anomaly_type, metric_value, host_name, cause_info, solutions):
+    """
+    Build a professional fallback response when LLM is unavailable.
+    Uses the Knowledge Graph directly with clean, professional text.
+    """
+    cause_name = clean_root_cause(cause_info['cause'])
+    confidence = cause_info.get('confidence', 0.7)
+
+    # Build human-readable explanation based on anomaly type and cause
+    explanations = {
+        'CPU_HIGH_USAGE': {
+            'MEMORY_LEAK': f"High CPU usage detected at {metric_value}%. A memory leak is causing the application to consume excessive processing resources as the garbage collector works overtime. This often occurs with long-running processes or unclosed connections.",
+            'Infinite loop in code': f"CPU at {metric_value}% indicates an infinite loop or inefficient algorithm in the application code. The process is continuously executing without yielding control, causing processor saturation.",
+            'Too many concurrent requests': f"CPU usage at {metric_value}% is caused by a surge in concurrent user requests. The server is overloaded and cannot process the incoming load efficiently.",
+            'DATABASE_POOL_EXHAUSTED': f"High CPU at {metric_value}% may be related to database connection pool exhaustion. The application is repeatedly trying to establish new connections, consuming significant processing power.",
+        },
+        'MEMORY_HIGH_USAGE': {
+            'MEMORY_LEAK': f"Memory usage at {metric_value}% indicates a memory leak. The application is allocating memory without properly releasing it, causing gradual consumption of available RAM.",
+            'Large object caching': f"Memory at {metric_value}% is caused by large objects being cached without size limits. The cache is growing beyond its intended capacity.",
+            'Too many objects in heap': f"High memory usage at {metric_value}% is due to excessive object creation in the JVM heap. This can occur during batch processing or large data imports.",
+        },
+        'DISK_HIGH_USAGE': {
+            'Log files not rotated': f"Disk usage at {metric_value}% is caused by log files that have not been rotated. Old log files are accumulating and consuming available storage.",
+            'Old artifacts not cleaned': f"Disk at {metric_value}% indicates build artifacts and temporary files have not been cleaned up. Deployment packages and old versions are filling the disk.",
+            'Temp files accumulation': f"Disk usage at {metric_value}% is due to temporary files accumulating over time. The /tmp directory or application temp folder needs cleanup.",
+            'Database growth without archiving': f"High disk usage at {metric_value}% is caused by database growth without proper archiving strategy. Historical data should be moved to cold storage.",
+        },
+    }
+
+    explanation = explanations.get(anomaly_type, {}).get(cause_name,
+        f"{anomaly_type} detected with value {metric_value}%. "
+        f"Root cause identified: {cause_name}. "
+        f"Immediate action is recommended to restore normal system operation."
+    )
+
+    return {
+        'anomaly_type': anomaly_type,
+        'root_cause': cause_name,
+        'explanation': explanation,
+        'solutions': [s['solution'] for s in solutions[:3]],
+        'confidence': confidence
+    }
+
+
 def clean_root_cause(value):
     if not value:
         return "UNKNOWN"
@@ -153,27 +244,19 @@ IMPORTANT:
         
         
     except json.JSONDecodeError as e:
-        # Si le JSON n'est pas valide, utiliser le KG directement
+        # Si le JSON n'est pas valide, utiliser le KG directement avec une explication professionnelle
         print(f"Erreur parsing JSON: {e}")
-        
+
         causes = kg_manager.find_causes(anomaly_type)
-        
+
         if causes:
-            premiere_cause = causes[0]
-            solutions_trouvees = kg_manager.find_solutions(premiere_cause['cause'])
-            
-            return {
-                'anomaly_type': anomaly_type,
-                'root_cause': clean_root_cause(premiere_cause['cause']),
-                'explanation': f"Cause la plus probable (confiance {premiere_cause['confidence']})",
-                'solutions': [s['solution'] for s in solutions_trouvees[:3]],
-                'confidence': premiere_cause['confidence']
-            }
+            best_cause, best_solutions = get_best_cause_with_solutions(causes, anomaly_type)
+            return build_fallback_response(anomaly_type, metric_value, host_name, best_cause, best_solutions)
         else:
             return {
                 'anomaly_type': anomaly_type,
                 'root_cause': 'UNKNOWN',
-                'explanation': 'Impossible de déterminer la cause',
+                'explanation': f'{anomaly_type} detected at {metric_value}% on {host_name}. The Knowledge Graph has no entries for this anomaly type. Manual investigation is required.',
                 'solutions': ['Investigation manuelle requise'],
                 'confidence': 0.0
             }
@@ -181,25 +264,17 @@ IMPORTANT:
     except Exception as e:
         # Autres erreurs (Ollama down, etc.)
         print(f"Erreur durant l'analyse: {e}")
-        
+
         causes = kg_manager.find_causes(anomaly_type)
-        
+
         if causes:
-            premiere_cause = causes[0]
-            solutions_trouvees = kg_manager.find_solutions(premiere_cause['cause'])
-            
-            return {
-                'anomaly_type': anomaly_type,
-                'root_cause': clean_root_cause(premiere_cause['cause']),
-                'explanation': f"Cause probable (Llama indisponible, KG utilisé)",
-                'solutions': [s['solution'] for s in solutions_trouvees[:3]],
-                'confidence': premiere_cause['confidence']
-            }
+            best_cause, best_solutions = get_best_cause_with_solutions(causes, anomaly_type)
+            return build_fallback_response(anomaly_type, metric_value, host_name, best_cause, best_solutions)
         else:
             return {
                 'anomaly_type': anomaly_type,
                 'root_cause': 'UNKNOWN',
-                'explanation': 'Analyse impossible',
+                'explanation': f'{anomaly_type} detected at {metric_value}% on {host_name}. The Knowledge Graph has no entries for this anomaly type. Manual investigation is required.',
                 'solutions': ['Vérifier Ollama et Knowledge Graph'],
                 'confidence': 0.0
             }

@@ -65,18 +65,22 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
               <>
                 <Typography variant="subtitle2" color="text.secondary">Solutions Recommandées</Typography>
                 <Stack spacing={1}>
-                  {solutions.length > 0 ? solutions.map((sol, i) => (
-                    <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {sol.title || sol.action || `Solution ${i+1}`}
-                      </Typography>
-                      {sol.description && (
-                        <Typography variant="caption" color="text.secondary">
-                          {sol.description}
+                  {solutions.length > 0 ? solutions.map((sol, i) => {
+                    const solutionText = typeof sol === 'string' ? sol : (sol.title || sol.action || `Solution ${i+1}`);
+                    const solutionDesc = typeof sol === 'object' ? sol.description : null;
+                    return (
+                      <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          {solutionText}
                         </Typography>
-                      )}
-                    </Paper>
-                  )) : (
+                        {solutionDesc && (
+                          <Typography variant="caption" color="text.secondary">
+                            {solutionDesc}
+                          </Typography>
+                        )}
+                      </Paper>
+                    );
+                  }) : (
                     <Typography variant="body2" sx={{ p: 2, color: 'text.secondary' }}>
                       No specific actions recommended.
                     </Typography>
