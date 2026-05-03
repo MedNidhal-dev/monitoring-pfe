@@ -57,7 +57,7 @@ function ManagerChatbot() {
         setLoading(true);
         
         try {
-            const response = await axios.post('/api/chat', {
+            const response = await axios.post(`${API_URL}/api/chat`, {
                 question: input
             }, {
                 headers: {
