@@ -23,7 +23,7 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
       return [];
     }
   };
-  
+
   const solutions = parseSolutions(incident.solutions || incident.checklist);
 
   return (
@@ -31,9 +31,9 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
       <DialogTitle>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Box>
-            <Chip 
-              label={incident.severity} 
-              sx={{ bgcolor: getSeverityColor(incident.severity), color: 'white', mb: 1 }} 
+            <Chip
+              label={incident.severity}
+              sx={{ bgcolor: getSeverityColor(incident.severity), color: 'white', mb: 1 }}
             />
             <Typography variant="h6">{incident.title}</Typography>
           </Box>
@@ -56,8 +56,8 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
                   Explication IA
                 </Typography>
                 <Paper variant="outlined" sx={{ p: 2, bgcolor: 'background.default' }}>
-                  <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                    {incident.explanation || incident.root_cause || "Aucune explication disponible."}
+                  <Typography variant="body2" sx={{ lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                    {incident.explanation || incident.description || incident.root_cause || "Aucune explication disponible."}
                   </Typography>
                 </Paper>
               </>
@@ -65,22 +65,18 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
               <>
                 <Typography variant="subtitle2" color="text.secondary">Solutions Recommandées</Typography>
                 <Stack spacing={1}>
-                  {solutions.length > 0 ? solutions.map((sol, i) => {
-                    const solutionText = typeof sol === 'string' ? sol : (sol.title || sol.action || `Solution ${i+1}`);
-                    const solutionDesc = typeof sol === 'object' ? sol.description : null;
-                    return (
-                      <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
-                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          {solutionText}
+                  {solutions.length > 0 ? solutions.map((sol, i) => (
+                    <Paper key={i} variant="outlined" sx={{ p: 1.5 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        {typeof sol === 'string' ? sol : (sol.title || sol.action || `Solution ${i+1}`)}
+                      </Typography>
+                      {sol.description && (
+                        <Typography variant="caption" color="text.secondary">
+                          {sol.description}
                         </Typography>
-                        {solutionDesc && (
-                          <Typography variant="caption" color="text.secondary">
-                            {solutionDesc}
-                          </Typography>
-                        )}
-                      </Paper>
-                    );
-                  }) : (
+                      )}
+                    </Paper>
+                  )) : (
                     <Typography variant="body2" sx={{ p: 2, color: 'text.secondary' }}>
                       No specific actions recommended.
                     </Typography>
@@ -112,10 +108,10 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
 
               <Box>
                 <Typography variant="caption" color="text.secondary">Status</Typography>
-                <Chip 
-                  label={incident.status} 
-                  icon={<Clock size={16} />} 
-                  color={incident.status === 'OPEN' ? 'warning' : 'success'} 
+                <Chip
+                  label={incident.status}
+                  icon={<Clock size={16} />}
+                  color={incident.status === 'OPEN' ? 'warning' : 'success'}
                   size="small"
                 />
               </Box>
@@ -127,9 +123,9 @@ const IncidentDetailModal = ({ open, onClose, incident, onResolve, canResolve })
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
         {incident.status === 'OPEN' && canResolve && (
-          <Button 
-            variant="contained" 
-            color="success" 
+          <Button
+            variant="contained"
+            color="success"
             startIcon={<CheckSquare size={18} />}
             onClick={() => { onResolve(incident.id); onClose(); }}
           >

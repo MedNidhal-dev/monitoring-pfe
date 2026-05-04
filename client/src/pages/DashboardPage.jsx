@@ -181,8 +181,8 @@ const DashboardPage = () => {
         </Grid>
       </Grid>
       
-      {/* AI Chatbot for Manager */}
-      {isManager() && <ManagerChatbot />}
+      {/* AI Chatbot for Manager - Hidden for presentation */}
+      {/* {isManager() && <ManagerChatbot />} */}
     </Box>
   );
 };
