@@ -68,13 +68,8 @@ def process_log_error(log_error):
     # Email si sévérité importante
     report_data = reporter.get_report(report_id)
     
-    if report_data and report_data['severity'] in ['CRITICAL', 'HIGH', 'MEDIUM']:
-        print(f"\nEnvoi email pour incident #{report_id}...")
-        try:
-            import email_sender
-            email_sender.send_alert(report_data)
-        except Exception as e:
-            print(f"Erreur envoi email: {e}")
+    # Email is handled by the Backend since notify_backend was successful
+    print(f"Incident #{report_id} notification sent to backend.")
     
     print("=" * 70)
     
@@ -114,13 +109,8 @@ def process_metric_anomaly(metric_anomaly):
     # Email si sévérité importante
     report_data = reporter.get_report(report_id)
     
-    if report_data and report_data['severity'] in ['CRITICAL', 'HIGH', 'MEDIUM']:
-        print(f"\nEnvoi email pour incident #{report_id}...")
-        try:
-            import email_sender
-            email_sender.send_alert(report_data)
-        except Exception as e:
-            print(f"Erreur envoi email: {e}")
+    # Email is handled by the Backend since notify_backend was successful
+    print(f"Incident #{report_id} notification sent to backend.")
     
     print("=" * 70)
     
