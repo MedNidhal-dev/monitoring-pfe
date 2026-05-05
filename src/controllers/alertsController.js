@@ -20,6 +20,6 @@ exports.receiveAlert = async (req, res) => {
 
   } catch (err) {
     console.error('Alert processing error:', err.message);
-    res.json({ success: false, error: 'Error processing alert' });
+    res.json({ success: false, error: 'Error processing alert', details: err.message });
   }
 };
