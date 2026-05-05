@@ -14,13 +14,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  redis:
-    image: redis:alpine
-    container_name: monitoring_redis
-    restart: always
-    ports:
-      - "6379:6379"
-
   backend:
     image: ${NEXUS_REGISTRY:-192.168.75.1:8082}/monitoring-backend:latest
     container_name: monitoring_backend
@@ -30,7 +23,9 @@ services:
     env_file: .env
     depends_on:
       - postgres
-      - redis
+    # Using host network mode or extra_hosts to reach host Redis if needed
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   ai-module:
     image: ${NEXUS_REGISTRY:-192.168.75.1:8082}/monitoring-ai:latest
