@@ -13,6 +13,7 @@ import {
   Clock, Target, FileText, Eye, Printer, Activity
 } from 'lucide-react';
 import { incidentsService } from '../services/api';
+import { useNotifications } from '../context/NotificationContext';
 
 const ReportsPage = () => {
   const [stats, setStats] = useState(null);
@@ -20,6 +21,7 @@ const ReportsPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedReport, setSelectedReport] = useState(null);
   const [reportOpen, setReportOpen] = useState(false);
+  const { lastMessage } = useNotifications();
 
   useEffect(() => {
     fetchData();
@@ -40,6 +42,15 @@ const ReportsPage = () => {
       setLoading(false);
     }
   };
+
+  // Auto-refresh on WebSocket events
+  useEffect(() => {
+    if (!lastMessage) return;
+    const type = lastMessage.type || (lastMessage.data && lastMessage.data.type);
+    if (type === 'NEW_INCIDENT' || type === 'INCIDENT_RESOLVED') {
+      fetchData();
+    }
+  }, [lastMessage]);
 
   const handlePrint = () => {
     window.print();

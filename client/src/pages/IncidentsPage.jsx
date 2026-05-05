@@ -7,6 +7,7 @@ import {
 import { Search, Eye, CheckCircle, Clock, RefreshCcw, Server, Filter } from 'lucide-react';
 import { incidentsService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useNotifications } from '../context/NotificationContext';
 import IncidentDetailModal from '../components/incidents/IncidentDetailModal';
 
 const IncidentsPage = () => {
@@ -21,6 +22,7 @@ const IncidentsPage = () => {
   const [selected, setSelected] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const { isDevOps } = useAuth();
+  const { lastMessage } = useNotifications();
 
   const fetchIncidents = useCallback(async () => {
     setLoading(true);
@@ -37,6 +39,15 @@ const IncidentsPage = () => {
   useEffect(() => {
     fetchIncidents();
   }, [fetchIncidents]);
+
+  // Auto-refresh on WebSocket events
+  useEffect(() => {
+    if (!lastMessage) return;
+    const type = lastMessage.type || (lastMessage.data && lastMessage.data.type);
+    if (type === 'NEW_INCIDENT' || type === 'INCIDENT_RESOLVED') {
+      fetchIncidents();
+    }
+  }, [lastMessage, fetchIncidents]);
 
   const handleResolve = async (id) => {
     try {

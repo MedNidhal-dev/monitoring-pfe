@@ -1,6 +1,7 @@
 const Incident = require('../models/Incident');
 const reportService = require('../services/reportService');
 const { client } = require('../config/redis');
+const { broadcastEvent } = require('../config/websocket');
 
 exports.getAllIncidents = async (req, res) => {
   try {
@@ -42,6 +43,15 @@ exports.resolveIncident = async (req, res) => {
     
     if (!result) {
       return res.json({ success: false, message: 'Update failed' });
+    }
+
+    // Invalidate Redis cache for stats
+    try {
+      await client.del('dashboard_stats');
+      console.log('[Redis] Stats cache invalidated');
+      broadcastEvent('INCIDENT_RESOLVED', { id });
+    } catch (redisErr) {
+      console.error('[Redis] Cache invalidation failed:', redisErr.message);
     }
 
     // Trigger AI learning process (background)

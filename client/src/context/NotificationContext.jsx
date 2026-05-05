@@ -50,7 +50,7 @@ export const NotificationProvider = ({ children }) => {
   const clearNotifications = () => setUnreadCount(0);
 
   return (
-    <NotificationContext.Provider value={{ unreadCount, notifications, clearNotifications }}>
+    <NotificationContext.Provider value={{ unreadCount, notifications, clearNotifications, lastMessage }}>
       {children}
     </NotificationContext.Provider>
   );

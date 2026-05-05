@@ -6,6 +6,7 @@ import {
   AlertCircle, Clock, CheckCircle2, Activity, ArrowUpRight, ExternalLink, BarChart3
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useNotifications } from '../context/NotificationContext';
 import { incidentsService } from '../services/api';
 import { ManagerChatbot } from '../components/chat';
 import { 
@@ -16,6 +17,7 @@ const DashboardPage = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const { isManager, user } = useAuth();
+  const { lastMessage } = useNotifications();
 
   useEffect(() => {
     fetchStats();
@@ -34,6 +36,14 @@ const DashboardPage = () => {
     }
   };
 
+  // Auto-refresh on WebSocket events
+  useEffect(() => {
+    if (!lastMessage) return;
+    const type = lastMessage.type || (lastMessage.data && lastMessage.data.type);
+    if (type === 'NEW_INCIDENT' || type === 'INCIDENT_RESOLVED') {
+      fetchStats();
+    }
+  }, [lastMessage]);
   
   const kpiData = isManager() ? [
     { label: 'Taux de Résolution', value: `${stats?.resolution_rate || 0}%`, icon: <CheckCircle2 size={24} />, color: '#10b981' },

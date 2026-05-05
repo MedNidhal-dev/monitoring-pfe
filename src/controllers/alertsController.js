@@ -1,4 +1,5 @@
 const alertService = require('../services/alertService');
+const { client } = require('../config/redis');
 
 exports.receiveAlert = async (req, res) => {
   try {
@@ -7,6 +8,7 @@ exports.receiveAlert = async (req, res) => {
     const incident = await alertService.processAlert(req.body);
 
     if (incident) {
+      client.del('dashboard_stats').catch(err => console.error('[Redis] Cache invalidation failed:', err.message));
       res.json({
         success: true,
         message: 'Alert processed successfully',

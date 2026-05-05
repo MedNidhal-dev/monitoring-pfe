@@ -41,4 +41,18 @@ function broadcastIncident(incident) {
   console.log(`[WebSocket] Alert sent to ${clients.size} clients`);
 }
 
-module.exports = { initWebSocket, broadcastIncident };
+function broadcastEvent(type, data) {
+  if (!wss || clients.size === 0) return;
+
+  const msg = JSON.stringify({ type, data });
+
+  clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(msg);
+    }
+  });
+
+  console.log(`[WebSocket] ${type} sent to ${clients.size} clients`);
+}
+
+module.exports = { initWebSocket, broadcastIncident, broadcastEvent };
