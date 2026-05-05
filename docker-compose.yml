@@ -31,10 +31,6 @@ services:
     depends_on:
       - postgres
       - redis
-    networks:
-      default:
-        aliases:
-          - backend
 
   ai-module:
     image: ${NEXUS_REGISTRY:-192.168.75.1:8082}/monitoring-ai:latest
