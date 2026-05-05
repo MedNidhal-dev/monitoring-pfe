@@ -56,72 +56,56 @@ Analyse de cause racine:
 Niveau de confiance: {confidence}
 """
     
+    # Notify backend immediately for real-time dashboard updates
+    notify_backend({
+        'title': report_title,
+        'description': description,
+        'service_name': service_name,
+        'anomaly_type': anomaly_type,
+        'root_cause': root_cause,
+        'explanation': explanation,
+        'solutions': solutions,
+        'confidence': confidence,
+        'severity': severity,
+        'timestamp': incident_time
+    })
+    
     print(f"Titre: {report_title}")
     print(f"Sévérité: {severity}")
     print(f"Cause: {root_cause}")
     print("-" * 70)
     
-    
-    # Enregistrer en base de données
+    # Enregistrer en base de données si pas déjà ouvert
     conn = psycopg2.connect(**DB_CONFIG)
     cursor = conn.cursor()
 
     existing_id = find_recent_open_incident(anomaly_type, host_name, minutes=60)
     if existing_id:
         print(f"Incident déjà ouvert récemment: #{existing_id} (skip création)")
+        cursor.close()
+        conn.close()
         return existing_id
-    
     
     insert_query = """
         INSERT INTO incident_reports (
-            title,
-            description,
-            severity,
-            status,
-            service_name,
-            anomaly_type,
-            root_cause,
-            explanation,
-            solutions,
-            confidence,
-            created_at
+            title, description, severity, status, service_name,
+            anomaly_type, root_cause, explanation, solutions, confidence, created_at
         ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id
     """
 
     cursor.execute(insert_query, (
-        report_title,
-        description,
-        severity,
-        'OPEN',
-        service_name,
-        anomaly_type,
-        root_cause,
-        explanation,
-        json.dumps(solutions),
-        confidence,
-        incident_time
+        report_title, description, severity, 'OPEN', service_name,
+        anomaly_type, root_cause, explanation, json.dumps(solutions),
+        confidence, incident_time
     ))
     
     report_id = cursor.fetchone()[0]
-    
     conn.commit()
     cursor.close()
     conn.close()
     
     print(f"Rapport enregistré - ID: {report_id}")
-    notify_backend({
-    'title': report_title,
-    'description': description,
-    'service_name': service_name,
-    'anomaly_type': anomaly_type,
-    'root_cause': root_cause,
-    'explanation': explanation,
-    'solutions': solutions,
-    'confidence': confidence,
-    'severity': severity,
-    'timestamp': incident_time
-})
     
     
     # Sauvegarder en fichier texte

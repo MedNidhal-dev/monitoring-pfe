@@ -40,7 +40,6 @@ const IncidentsPage = () => {
     fetchIncidents();
   }, [fetchIncidents]);
 
-  // Auto-refresh on WebSocket events
   useEffect(() => {
     if (!lastMessage) return;
     const type = lastMessage.type || (lastMessage.data && lastMessage.data.type);
@@ -74,7 +73,7 @@ const IncidentsPage = () => {
     return inc?.service_name || 'N/A';
   };
 
-  // build unique server list for filter
+
   const serverList = [...new Set(incidents.map(inc => getServerName(inc)))].filter(Boolean);
 
   const filtered = incidents.filter(inc => {

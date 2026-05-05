@@ -70,8 +70,11 @@ def process_log_error(log_error):
     
     if report_data and report_data['severity'] in ['CRITICAL', 'HIGH', 'MEDIUM']:
         print(f"\nEnvoi email pour incident #{report_id}...")
-        # email_sender.send_alert(report_data)
-        print("(Email désactivé pour l'instant)")
+        try:
+            import email_sender
+            email_sender.send_alert(report_data)
+        except Exception as e:
+            print(f"Erreur envoi email: {e}")
     
     print("=" * 70)
     
@@ -113,8 +116,11 @@ def process_metric_anomaly(metric_anomaly):
     
     if report_data and report_data['severity'] in ['CRITICAL', 'HIGH', 'MEDIUM']:
         print(f"\nEnvoi email pour incident #{report_id}...")
-        # email_sender.send_alert(report_data)
-        print("(Email désactivé pour l'instant)")
+        try:
+            import email_sender
+            email_sender.send_alert(report_data)
+        except Exception as e:
+            print(f"Erreur envoi email: {e}")
     
     print("=" * 70)
     

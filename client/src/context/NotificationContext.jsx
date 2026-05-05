@@ -22,7 +22,7 @@ export const NotificationProvider = ({ children }) => {
       const msgType = lastMessage.type || lastMessage.data?.type;
       const incident = lastMessage.data || lastMessage;
       
-      // Support both French and English message types
+      
       const isNewIncident = msgType === 'NEW_INCIDENT' || msgType === 'NOUVEL_INCIDENT' || incident?.anomaly_type;
       
       if (isNewIncident) {
