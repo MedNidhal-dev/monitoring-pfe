@@ -45,7 +45,6 @@ exports.resolveIncident = async (req, res) => {
       return res.json({ success: false, message: 'Update failed' });
     }
 
-    // Invalidate Redis cache for stats
     try {
       await client.del('dashboard_stats');
       console.log('[Redis] Stats cache invalidated');
@@ -54,7 +53,6 @@ exports.resolveIncident = async (req, res) => {
       console.error('[Redis] Cache invalidation failed:', redisErr.message);
     }
 
-    // Trigger AI learning process (background)
     try {
       const axios = require('axios');
       // AI module API port is 5001

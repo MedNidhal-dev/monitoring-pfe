@@ -6,10 +6,7 @@ import re
 
 
 def get_best_cause_with_solutions(causes, anomaly_type):
-    """
-    Pick the best cause from the list. Prefers causes that have solutions.
-    For CPU anomalies, prefers memory/loop causes over database pool.
-    """
+   
     if not causes:
         return None, []
 
@@ -23,7 +20,6 @@ def get_best_cause_with_solutions(causes, anomaly_type):
         # Relevance scoring
         score = cause_info.get('confidence', 0.5)
 
-        # Boost causes that actually have solutions
         if sols:
             score += 0.1
 
@@ -124,12 +120,10 @@ def analyze_anomaly(anomaly_data):
     print("-" * 70)
     
     
-    # Étape 1: Chercher les connaissances dans le Knowledge Graph
     print("Consultation du Knowledge Graph...")
     
     kg_context = kg_manager.build_kg_context(anomaly_type)
     
-    # Si aucune connaissance trouvée
     if "No knowledge found" in kg_context:
         print(f"Aucune info disponible pour {anomaly_type}")
         return {

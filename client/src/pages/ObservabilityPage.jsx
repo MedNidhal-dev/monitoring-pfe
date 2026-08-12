@@ -7,7 +7,6 @@ const ObservabilityPage = () => {
   const { isDevOps, isDeveloper, isManager } = useAuth();
   const [activeTab, setActiveTab] = useState(0);
 
-  // tous les dashboards grafana
     const allDashboards = [
     { 
       title: 'Infrastructure & Santé Système', 
@@ -28,6 +27,13 @@ const ObservabilityPage = () => {
       url: "http://192.168.75.129:3000/d/efiqw65lbqccgd/ci-cd-monitoring-e28094-jenkins?orgId=1&kiosk&refresh=5s",
       icon: <Cpu size={20} />,
       desc: 'Pipelines et déploiements.',
+      roles: ['devops', 'developer', 'manager']
+    },
+    { 
+      title: 'Monitoring CI/CD (Nexus)', 
+      url: "http://192.168.75.129:3000/d/efiqw65lbqccgd/ci-cd-monitoring-e28094-nexus?orgId=1&kiosk&refresh=5s",
+      icon: <Cpu size={20} />,
+      desc: 'Nexus and builds.',
       roles: ['devops', 'developer', 'manager']
     }
   ];

@@ -7,8 +7,12 @@ const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
-    await pool.query('SELECT NOW()');
-    console.log('Database connected');
+    try {
+      await pool.query('SELECT NOW()');
+      console.log('Database connected');
+    } catch (dbError) {
+      console.error('Database connection failed, but starting server anyway:', dbError.message);
+    }
 
     const httpServer = http.createServer(app);
     initWebSocket(httpServer);
@@ -19,8 +23,7 @@ const startServer = async () => {
     });
 
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('Critical failure during server startup:', error);
   }
 };
 

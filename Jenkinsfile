@@ -16,11 +16,11 @@ pipeline {
         stage('Build Docker') {
             steps {
                 script {
-                    echo "🏗️ Build Backend..."
+                    echo " Build Backend..."
                     sh "docker build -t ${NEXUS_REGISTRY}/${IMAGE_BACKEND}:latest ."
-                    echo "🏗️ Build AI Module..."
+                    echo " Build AI Module..."
                     sh "docker build -t ${NEXUS_REGISTRY}/${IMAGE_AI}:latest ./ai-module"
-                    echo "🏗️ Build Frontend..."
+                    echo " Build Frontend..."
                     sh "docker build --build-arg VITE_API_URL=http://192.168.75.129:3001/api -t ${NEXUS_REGISTRY}/${IMAGE_FRONTEND}:latest ./client"
 
                 }
@@ -34,7 +34,7 @@ pipeline {
                         sh "echo ${NEXUS_PASSWORD} | docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} --password-stdin"
                         sh "docker push ${NEXUS_REGISTRY}/${IMAGE_BACKEND}:latest"
                         sh "docker push ${NEXUS_REGISTRY}/${IMAGE_AI}:latest"
-                        sh "docker push ${NEXUS_REGISTRY}/${IMAGE_FRONTEND}:latest" // Nouveau
+                        sh "docker push ${NEXUS_REGISTRY}/${IMAGE_FRONTEND}:latest" 
                     }
                 }
             }

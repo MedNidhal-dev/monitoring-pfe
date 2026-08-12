@@ -3,11 +3,10 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET;
 
 if (!SECRET) {
-  throw new Error('JWT_SECRET not set');
+  throw new Error('JWT_SECRET not set'); // hello nidhal
 }
 
 const authMiddleware = (req, res, next) => {
-  // Skip auth for logstash
   if (req.path === '/ingest' || req.originalUrl.includes('/ingest')) {
     return next();
   }

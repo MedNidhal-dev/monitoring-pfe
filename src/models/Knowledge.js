@@ -9,8 +9,7 @@ class Knowledge {
   }
 
   static async findSolutions(anomalyType) {
-    // Professional Graph Query: Find solutions linked to this anomaly type
-    // Anomaly --[has_cause]--> Cause --[has_solution]--> Solution
+  
     const result = await db.query(
       `SELECT DISTINCT k2.tail_entity as solution, k2.confidence 
        FROM knowledge_graph k1
@@ -22,7 +21,6 @@ class Knowledge {
       [anomalyType]
     );
     
-    // Fallback: Look for direct 'has_solution' relation
     if (result.rows.length === 0) {
       const fallback = await db.query(
         "SELECT tail_entity as solution, confidence FROM knowledge_graph WHERE head_entity = $1 AND (relation = 'has_solution' OR relation = 'SOLVED_BY') ORDER BY confidence DESC",

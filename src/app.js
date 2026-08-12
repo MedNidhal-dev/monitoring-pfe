@@ -8,24 +8,14 @@ const { connectRedis } = require('./config/redis');
 
 const app = express();
 
-// Connect Redis on startup
 connectRedis().catch(console.error);
 
 const authMiddleware = require('./Middleware/authMiddleware');
 const errorHandler = require('./Middleware/errorHandler');
 
-// Security headers
 app.use(helmet());
 
-// Rate limiting disabled for demo
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000,
-//   max: 1000,
-//   message: { success: false, error: 'Too many requests' }
-// });
-// app.use(limiter);
 
-// Stricter rate limit for auth endpoints
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 1000, // 1000 attempts per 15 minutes
