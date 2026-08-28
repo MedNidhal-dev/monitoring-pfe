@@ -19,7 +19,7 @@ app.use(helmet());
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 1000, // 1000 attempts per 15 minutes
-  message: { success: false, error: 'Too many login attempts, please try again later' }
+  message: { success: false, error: 'Tooo many login attempts, please try again later' }
 });
 
 app.use(cors({
